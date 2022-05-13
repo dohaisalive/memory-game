@@ -1,57 +1,34 @@
 import { useState } from "react";
 import Card from "./Card";
+import CardsData from "../data/CardsData.js";
 
 function Cards() {
   const [failed, setFailed] = useState(0);
   const [score, setScore] = useState(0);
-
   const [items, setItems] = useState(
-    [
-      { id: 0, picture: "/pics/cow.png", state: "" },
-      { id: 0, picture: "/pics/cow.png", state: "" },
-
-      { id: 1, picture: "/pics/crocodile.png", state: "" },
-      { id: 1, picture: "/pics/crocodile.png", state: "" },
-
-      { id: 2, picture: "/pics/elephant.png", state: "" },
-      { id: 2, picture: "/pics/elephant.png", state: "" },
-
-      { id: 3, picture: "/pics/flamingo.png", state: "" },
-      { id: 3, picture: "/pics/flamingo.png", state: "" },
-
-      { id: 4, picture: "/pics/fox.png", state: "" },
-      { id: 4, picture: "/pics/fox.png", state: "" },
-
-      { id: 5, picture: "/pics/panda-bear.png", state: "" },
-      { id: 5, picture: "/pics/panda-bear.png", state: "" },
-
-      { id: 6, picture: "/pics/sheep.png", state: "" },
-      { id: 6, picture: "/pics/sheep.png", state: "" },
-
-      { id: 7, picture: "/pics/squirrel.png", state: "" },
-      { id: 7, picture: "/pics/squirrel.png", state: "" },
-    ].sort(() => Math.random() - 0.5)
+    [...CardsData].sort((a, b) => 0.5 - Math.random())
   );
 
-  function check(current) {
-    if (items[current].id === items[firstElement].id) {
-      items[current].state = "correct";
-      items[firstElement].state = "correct";
+  function updateStuff(updateState, secondElement) {
+    items[firstElement].state = updateState;
+    items[secondElement].state = updateState;
+    setItems([...items]);
+  }
+
+  function check(secondElement) {
+    if (items[secondElement].id === items[firstElement].id) {
+      updateStuff("correct", secondElement);
       setScore(score + 1);
-      setItems([...items]);
       setFirstElement(-1);
       if (score === 8) {
         //congrats!!
       }
     } else {
-      items[current].state = "wrong";
-      items[firstElement].state = "wrong";
+      updateStuff("wrong", secondElement);
       setFailed(failed + 1);
-      setItems([...items]);
+      //time out after 1 second.
       setTimeout(() => {
-        items[current].state = "";
-        items[firstElement].state = "";
-        setItems([...items]);
+        updateStuff("", secondElement);
         setFirstElement(-1);
       }, 1000);
     }
@@ -62,7 +39,7 @@ function Cards() {
       items[id].state = "active";
       setItems([...items]);
       setFirstElement(id);
-    } else {
+    } else if (items[id] !== items[firstElement]) {
       check(id);
     }
   }
