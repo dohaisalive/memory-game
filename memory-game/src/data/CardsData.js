@@ -1,4 +1,4 @@
-const CardsDara = [
+const CardsData = [
   { id: 0, el: 0, picture: "/pics/cow.png", state: "" },
   { id: 0, el: 1, picture: "/pics/cow.png", state: "" },
 
@@ -24,4 +24,4 @@ const CardsDara = [
   { id: 7, el: 1, picture: "/pics/squirrel.png", state: "" },
 ];
 
-export default CardsDara;
+export default CardsData;

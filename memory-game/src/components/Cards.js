@@ -8,6 +8,7 @@ function Cards() {
   const [items, setItems] = useState(
     [...CardsData].sort((a, b) => 0.5 - Math.random())
   );
+  const [visible, setVisible] = useState(false);
 
   function updateStuff(updateState, secondElement) {
     items[firstElement].state = updateState;
@@ -22,6 +23,7 @@ function Cards() {
       setFirstElement(-1);
       if (score === 8) {
         //congrats!!
+        setVisible(true);
       }
     } else {
       updateStuff("wrong", secondElement);
@@ -53,7 +55,9 @@ function Cards() {
           <Card key={index} item={item} id={index} handleClick={handleClick} />
         ))}
       </div>
-      <p>score: {score}</p>
+      {visible && <h1>YOU WON!!! CONGRATULATIONS!!!</h1>}
+      {visible && <p>refresh to play again</p>}
+      <p>score: {score}/8</p>
       <p>number of failed attempts: {failed}</p>
     </div>
   );
